@@ -1,12 +1,17 @@
-import pandas as pd
-import geopandas
 from datetime import datetime
+import requests
+import json
 
-raw = geopandas.read_file("https://services5.arcgis.com/0akaykIdiPuMhFIy/arcgis/rest/services/bs_infoPannes_prod_vue/FeatureServer/1/query?returnGeometry=true&where=1=1&outSR=4326&outFields=*&inSr=4326&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=geojson")
-raw = raw.set_index('OBJECTID')
+points_url = "https://services5.arcgis.com/0akaykIdiPuMhFIy/arcgis/rest/services/bs_infoPannes_prod_vue/FeatureServer/0/query?returnGeometry=true&where=1=1&outSR=4326&outFields=*&inSr=4326&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=geojson"
+shapes_url = "https://services5.arcgis.com/0akaykIdiPuMhFIy/arcgis/rest/services/bs_infoPannes_prod_vue/FeatureServer/1/query?returnGeometry=true&where=1=1&outSR=4326&outFields=*&inSr=4326&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&geometryPrecision=6&resultType=tile&f=geojson"
 
 now = datetime.now()
 
-raw["timestamp"] = now
+geojson_points = json.dumps(requests.get(points_url).json())
+geojson_shapes = json.dumps(requests.get(shapes_url).json())
 
-raw.to_csv(f"data/data-{now.strftime('%Y-%m-%d_%H%M')}.csv")
+with open(f"data/data-points-{now.strftime('%Y-%m-%d_%H%M')}.geojson", 'w') as file:
+    file.write(geojson_points)
+
+with open(f"data/data-shapes-{now.strftime('%Y-%m-%d_%H%M')}.geojson", 'w') as file:
+    file.write(geojson_shapes)

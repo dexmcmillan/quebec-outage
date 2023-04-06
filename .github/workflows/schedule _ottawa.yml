@@ -1,4 +1,4 @@
-name: Collect new data
+name: Collect new data (Ottawa)
 on:
   schedule:
     - cron: 0/10 * * * *

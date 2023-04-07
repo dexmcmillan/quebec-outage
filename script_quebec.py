@@ -10,8 +10,8 @@ now = datetime.now()
 geojson_points = json.dumps(requests.get(points_url).json())
 geojson_shapes = json.dumps(requests.get(shapes_url).json())
 
-with open(f"data/data-points-{now.strftime('%Y-%m-%d_%H%M')}.geojson", 'w') as file:
+with open(f"data/quebec/data-points-{now.strftime('%Y-%m-%d_%H%M')}.geojson", 'w') as file:
     file.write(geojson_points)
 
-with open(f"data/data-shapes-{now.strftime('%Y-%m-%d_%H%M')}.geojson", 'w') as file:
+with open(f"data/quebec/data-shapes-{now.strftime('%Y-%m-%d_%H%M')}.geojson", 'w') as file:
     file.write(geojson_shapes)

@@ -1,4 +1,4 @@
-name: Collect new data
+name: Collect new data (Montreal)
 on:
   schedule:
     - cron: 0/10 * * * *
@@ -21,8 +21,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Collect data
-        run: python3 script.py
+      - name: Collect Ottawa data
+        run: python3 script_montreal.py
 
       - name: Push back to repo
         uses: mikeal/publish-to-github-action@master
